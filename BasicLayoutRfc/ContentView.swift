@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var data: [LandmarkModel] = LandmarkViewModel.data
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            VStack(alignment: .leading, spacing: 0) {
+                
+                Text("Landmark")
+                    .font(.system(size: 36, weight: .bold))
+                    .padding([.top, .leading, .trailing])
+                
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        ForEach(data, id: \.self.id ) { item in
+                            NavigationLink(
+                                destination: { EmptyView() },
+                                label: {
+                                    LandmarkRow(name: item.name, image: item.image, from: item.from)
+                                })
+                        }
+                    }
+                }
+                .padding()
+            }
+            .padding(.top)
+            .ignoresSafeArea(edges: .bottom)
         }
-        .padding()
+        
     }
 }
 
